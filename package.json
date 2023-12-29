@@ -1,0 +1,27 @@
+{
+  "name": "electronhab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js",
+    "package": "electron-packager . MyElectronApp --platform=win32 --arch=x64 --overwrite"
+  },
+  "build": {
+    "appId": "com.example.habDetect",
+    "productName": "Algae Bird",
+    "directories": {
+      "output": "build"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "imageCache/AlgaeBird.ico"
+      }
+    },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron-packager": "^17.1.2"
+  }
+}

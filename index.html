@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algae Guard V1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Algae Guard V1</h1>
+
+    <button id="scriptRun">Click me ho</button>
+
+    <!-- Load TensorFlow.js from a script tag -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+
+    <script>
+        var button = document.getElementById('scriptRun');
+
+        button.addEventListener('click', function () {
+            // Load the converted Keras model
+            const modelPath = 'path/to/your/converted/model/model.json'; // Replace with the actual path
+            tf.loadLayersModel(modelPath).then(model => {
+                // Perform image classification using the loaded model
+                classifyImages(model);
+            });
+        });
+
+        function classifyImages(model) {
+            // Replace this with your actual logic to loop through images and perform classification
+            const dataDir = 'path/to/your/image/directory'; // Replace with the actual path
+            const imagePaths = ['image1.jpg', 'image2.jpg', 'image3.jpg']; // Replace with your image paths
+
+            imagePaths.forEach(imagePath => {
+                // Load and preprocess the image
+                const img = new Image();
+                img.src = dataDir + '/' + imagePath;
+
+                // Perform classification
+                tf.tidy(() => {
+                    // Preprocess the image (you may need to adjust this based on your preprocessing steps)
+                    const inputTensor = tf.browser.fromPixels(img).expandDims(0).toFloat().div(255);
+
+                    // Make a prediction
+                    const prediction = model.predict(inputTensor);
+                    const predictedClass = prediction.argMax(1).dataSync()[0];
+
+                    // Log the result (you can replace this with your own handling)
+                    console.log(`Image: ${imagePath}, Predicted Class: ${predictedClass}`);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
